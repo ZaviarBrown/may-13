@@ -1,0 +1,20 @@
+{
+    "name": "timefornode",
+    "version": "1.0.0",
+    "main": "app.js",
+    "scripts": {
+        "test": "mocha",
+        "start": "node app.js",
+        "eldenRingBestDLC": "echo yeah duh obvi"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "express": "^4.19.2"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.4"
+    }
+}
