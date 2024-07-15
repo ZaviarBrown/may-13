@@ -107,4 +107,10 @@ app.get('/books', (req, res) => {
 //*                           w/ JSON
 //! --------------------------------------------------------------------
 
+app.get('/last-example', (req, res) => {
+    res.json({
+        anyKey: 'Any values',
+    });
+});
+
 app.listen(5000, () => console.log('Yeah we out here expressin'));
