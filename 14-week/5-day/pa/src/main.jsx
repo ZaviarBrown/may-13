@@ -5,9 +5,9 @@ import './index.css';
 import FavFruitProvider from './context/FavFruitContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <FavFruitProvider>
-      <App />
-    </FavFruitProvider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <FavFruitProvider>
+            <App />
+        </FavFruitProvider>
+    </React.StrictMode>
 );
