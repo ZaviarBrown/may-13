@@ -1,0 +1,139 @@
+// import articles from "../data/data.json";
+import { createSelector } from "reselect";
+
+//! --------------------------------------------------------------------
+//*                            Action Types
+//! --------------------------------------------------------------------
+const LOAD_ARTICLES = "article/loadArticles";
+const ADD_ARTICLE = "article/addArticle";
+
+//! --------------------------------------------------------------------
+//*                           Action Creators
+//! --------------------------------------------------------------------
+
+export const loadArticles = (payload) => {
+  return {
+    type: LOAD_ARTICLES,
+    payload,
+  };
+};
+
+export const addArticle = (payload) => {
+  return {
+    type: ADD_ARTICLE,
+    payload,
+  };
+};
+
+//! --------------------------------------------------------------------
+//*                        Normalizing Function
+//! --------------------------------------------------------------------
+
+const normalizer = (array) => {
+  const payload = {};
+
+  array.forEach((el) => {
+    payload[el.id] = el;
+  });
+
+  return payload;
+};
+
+//! --------------------------------------------------------------------
+//*                             Selectors
+//! --------------------------------------------------------------------
+
+export const articleSelector = createSelector(
+  (state) => state.articleState.entries,
+  (allArticles) => Object.values(allArticles)
+);
+
+//! --------------------------------------------------------------------
+//?                              Thunks
+//! --------------------------------------------------------------------
+
+export const loadArticlesThunk = () => async (dispatch, getState) => {
+  const res = await fetch("/api/articles");
+
+  //   console.log("getState():", getState());
+
+  if (res.ok) {
+    const articles = await res.json();
+
+    dispatch(loadArticles(normalizer(articles)));
+    return null;
+  } else {
+    const errors = await res.json();
+    return errors;
+  }
+};
+
+export const addArticleThunk = (articleFormData) => async (dispatch) => {
+  const res = await fetch("/api/articles", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(articleFormData),
+  });
+
+  // const data = await res.json() //? Write once outside the if else
+
+  if (res.ok) {
+    const newArticle = await res.json();
+    dispatch(addArticle(normalizer([newArticle])));
+    return null;
+  } else {
+    const errors = await res.json();
+    return errors;
+  }
+};
+
+//! --------------------------------------------------------------------
+//*                              Reducer
+//! --------------------------------------------------------------------
+
+// {
+//     1: {
+//         id: 1,
+//         data: "here"
+//     },
+//     2: {
+//         id: 2,
+//         data: "here"
+//     },
+// }
+
+const initialState = { entries: {}, isLoading: true };
+
+const articleReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case LOAD_ARTICLES:
+      // iterate in here over payload to add to entries
+      // or handle this in the Thunk Action
+      return { ...state, entries: { ...payload } };
+    case ADD_ARTICLE:
+      return { ...state, entries: { ...state.entries, ...payload } };
+    default:
+      return state;
+  }
+};
+
+export default articleReducer;
+
+//! --------------------------------------------------------------------
+//*                         Basic Catch All Thunk
+//! --------------------------------------------------------------------
+// export const loadArticlesThunk = () => async (dispatch, getState) => {
+//   try {
+//     const res = await fetch("/api/articles/hey/look/at/me");
+
+//     if (res.ok) {
+//       console.log("Things went well");
+//     } else {
+//       console.log("Things did not go so well :(");
+//     }
+//   } catch (e) {
+//     console.log("This was my error", e);
+//   }
+// };
