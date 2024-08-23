@@ -1,0 +1,34 @@
+{
+    "spots": {
+        "1": {
+            "id": 1,
+            "ownerId": 1,
+            "address": "",
+            "city": "",
+            "state": "",
+            "country": "",
+            "lat": 0.1234567,
+            "lng": 0.1234567,
+            "name": "",
+            "description": "",
+            "price": 123,
+            "createdAt": "",
+            "updatedAt": "",
+            "avgRating": 5.0,
+            "previewImage": "",
+            "SpotImages": [
+                {
+                    "id": 1,
+                    "url": "",
+                    "preview": true
+                }
+            ],
+            "Owner": {
+                "id": 1,
+                "firstName": "",
+                "lastName": ""
+            }
+        }
+    },
+    "reviews": {}
+}

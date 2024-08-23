@@ -1,0 +1,31 @@
+{
+    "groups": {
+        "1": {
+            "id": 1,
+            "organizerId": 1,
+            "name": "",
+            "about": "",
+            "type": "",
+            "private": true,
+            "city": "",
+            "state": "",
+            "createdAt": "",
+            "updatedAt": "",
+            "numMembers": 1,
+            "previewImage": "",
+            "GroupImages": [
+                {
+                    "id": 1,
+                    "url": "",
+                    "preview": true
+                }
+            ],
+            "Organizer": {
+                "id": 1,
+                "firstName": "",
+                "lastName": ""
+            }
+        }
+    },
+    "events": {}
+}
