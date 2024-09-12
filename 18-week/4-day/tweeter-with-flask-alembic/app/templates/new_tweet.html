@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block main %}
+<h1>Post a Tweet!</h1>
+<form class="tweet" method="post" novalidate>
+    {{ form.csrf_token }}
+
+    <div>
+        {% if tweet %} {% for err in tweet %}
+        <p style="color: red">{{ err }}</p>
+        {% endfor %} {% endif %} {{ form.tweet.label }}: {{ form.tweet() }}
+    </div>
+
+    <div>
+        {% if likes %} {% for err in likes %}
+        <p style="color: red">{{ err }}</p>
+        {% endfor %} {% endif %} {{ form.likes.label }}: {{ form.likes() }}
+    </div>
+    <div>{{ form.submit() }}</div>
+</form>
+
+{% endblock %}
