@@ -1,0 +1,11 @@
+<form method="post" action="/simple-form">
+    {{ form.csrf_token }}
+    <div>
+        {{form.name.label}} {{form.name()}}
+        {{form.age.label}} {{form.age()}}
+        {{form.bio.label}} {{form.bio()}}
+        {{form.birth_date.label}} {{form.birth_date()}}
+        {{form.fav_lang.label}} {{form.fav_lang()}}
+        {{form.submit()}}
+    </div>
+</form>
