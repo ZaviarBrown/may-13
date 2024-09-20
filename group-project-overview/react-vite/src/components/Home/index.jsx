@@ -18,6 +18,7 @@ export default function Home() {
                     <div key={el.id}>
                         <h2>{el.User.username}</h2>
                         <h3>{el.tweet}</h3>
+                        {el.image && <img src={el.image} alt={el.tweet} />}
                         {el.LikedBy.length !== 0 && (
                             <h4>This tweet was liked by:</h4>
                         )}

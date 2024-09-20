@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required
 
+from app.api.aws import get_unique_filename, upload_file_to_s3
 from app.forms import TweetForm
 from app.models import Tweet, db
 
@@ -33,16 +34,28 @@ def post_a_tweet():
     """
     Query for all tweets and returns them in a list of tweet dictionaries
     """
-    print("\n\n\n HEEEEYYOOOOOOO \n\n\n")
 
     form = TweetForm()
 
     form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
-        new_tweet = Tweet()
+        tweet = form.data["tweet"]
+        user_id = form.data["user_id"]
+        image = form.data["image"]
 
-        form.populate_obj(new_tweet)
+        image.filename = get_unique_filename(image.filename)
+        upload = upload_file_to_s3(image)
+        print(upload)
+
+        if "url" not in upload:
+            # if the dictionary doesn't have a url key
+            # it means that there was an error when you tried to upload
+            # so you send back that error message (and you printed it above)
+            return {"errors": [upload]}, 400
+
+        url = upload["url"]
+        new_tweet = Tweet(tweet=tweet, user_id=user_id, image=url)
 
         db.session.add(new_tweet)
 
@@ -52,5 +65,3 @@ def post_a_tweet():
 
     if form.errors:
         return {"errors": format_errors(form.errors)}, 400
-
-    return

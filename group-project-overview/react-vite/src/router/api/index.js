@@ -22,14 +22,11 @@ export const getUserById = async ({ params }) => {
 };
 
 export const postNewTweet = async ({ request }) => {
-    const newTweet = await request.json();
+    const newTweet = await request.formData();
 
     const res = await fetch('/api/tweets', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newTweet),
+        body: newTweet,
     });
 
     if (res.ok) {
@@ -40,3 +37,23 @@ export const postNewTweet = async ({ request }) => {
         return errors;
     }
 };
+
+// export const postNewTweet = async ({ request }) => {
+//     const newTweet = await request.json();
+
+//     const res = await fetch('/api/tweets', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(newTweet),
+//     });
+
+//     if (res.ok) {
+//         const data = await res.json();
+//         return data;
+//     } else {
+//         const errors = await res.json();
+//         return errors;
+//     }
+// };

@@ -3,21 +3,22 @@ import { useSelector } from 'react-redux';
 import { Form, useActionData, useSubmit } from 'react-router-dom';
 
 export default function CreateTweet() {
-    const [tweet, setTweet] = useState('');
     const actionData = useActionData();
-    const user = useSelector((state) => state.session.user);
     const submit = useSubmit();
+    const user = useSelector((state) => state.session.user);
+    const [tweet, setTweet] = useState('');
+    const [image, setImage] = useState('');
     const [error, setError] = useState('');
 
     const onSubmit = (e) => {
         e.preventDefault();
 
-        const newTweet = {
-            user_id: user.id,
-            tweet,
-        };
+        const newTweet = new FormData();
+        newTweet.append('user_id', user.id);
+        newTweet.append('tweet', tweet);
+        newTweet.append('image', image);
 
-        submit(newTweet, { method: 'post', encType: 'application/json' });
+        submit(newTweet, { method: 'post', encType: 'multipart/form-data' });
     };
 
     useEffect(() => {
@@ -38,6 +39,11 @@ export default function CreateTweet() {
                     name='tweet'
                     value={tweet}
                     onChange={(e) => setTweet(e.target.value)}
+                />
+                <input
+                    type='file'
+                    accept='image/*'
+                    onChange={(e) => setImage(e.target.files[0])}
                 />
                 <button type='submit'>Post your tweet</button>
             </Form>

@@ -13,6 +13,7 @@ class Tweet(db.Model):
     user_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False
     )
+    image = db.Column(db.String(1000), nullable=True)
 
     # Related data
     author = db.relationship("User", back_populates="tweets")
@@ -24,6 +25,7 @@ class Tweet(db.Model):
             "tweet": self.tweet,
             "numLikes": len(self.liked_by),
             "userId": self.user_id,
+            "image": self.image,
         }
 
     # could be named to_dict()
